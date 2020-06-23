@@ -1,0 +1,24 @@
+<form (ngSubmit)="_submitForm()" [formGroup]="form" nz-form>
+    <div labelWidth="100" se-container="1">
+        <nz-alert
+                [nzCloseable]="true"
+                [nzMessage]="'确认转账后，资金将直接打入对方账户，无法退回。'"
+                [nzShowIcon]="true"
+                class="pb-lg"
+        ></nz-alert>
+        <se label="付款账户">{{ item.pay_account }}</se>
+        <se label="账户类型">{{ item.receiver_type === 'alipay' ? '支付宝' : '银行' }}</se>
+        <se label="收款账户">{{ item.receiver_account }}</se>
+        <se label="收款人姓名">{{ item.receiver_name }}</se>
+        <se label="转账金额"
+        ><strong class="text-lg">{{ item.amount }}</strong></se
+        >
+        <se class="border-top-1 pt-lg" error="至少6位数以上" label="支付密码" required>
+            <input formControlName="password" nz-input type="password"/>
+        </se>
+        <se>
+            <button [disabled]="form.invalid" [nzLoading]="loading" [nzType]="'primary'" nz-button>提交</button>
+            <button (click)="prev()" nz-button>上一步</button>
+        </se>
+    </div>
+</form>

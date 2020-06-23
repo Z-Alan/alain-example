@@ -1,0 +1,15 @@
+<div class="alain-default__content-title">
+    <h1>
+        Import & Export excel file,
+        <a href="//ng-alain.com/components/xlsx" target="_blank">Document</a>
+    </h1>
+</div>
+<nz-card nzTitle="Import">
+    <button (click)="url()" nz-button>Via Url</button>
+    <input (change)="change($event)" class="ml-sm" multiple="false" type="file"/>
+    <p class="mt-sm">result: {{ data | json }}</p>
+</nz-card>
+<nz-card nzTitle="Export">
+    <button (click)="download()" nz-button>Export</button>
+    <st [columns]="columns" [data]="users" [ps]="3" class="mt-sm"></st>
+</nz-card>

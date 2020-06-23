@@ -1,0 +1,116 @@
+<div [nzGutter]="24" class="pt-lg" nz-row>
+    <div nz-col nzLg="18" nzMd="24" nzSm="24" nzXs="24">
+        <nz-card [nzBordered]="false" [nzTitle]="'app.monitor.trading-activity' | translate" class="mb-lg">
+            <div nz-row>
+                <div nz-col nzMd="6" nzSm="12" nzXs="24">
+                    <number-info [subTitle]="'app.monitor.total-transactions' | translate" [total]="'124,543,233'"
+                                 suffix="元"></number-info>
+                </div>
+                <div nz-col nzMd="6" nzSm="12" nzXs="24">
+                    <number-info [subTitle]="'app.monitor.sales-target' | translate" [total]="'92%'"></number-info>
+                </div>
+                <div nz-col nzMd="6" nzSm="12" nzXs="24">
+                    <number-info [subTitle]="'app.monitor.remaining-time' | translate" [total]="lastTotalTime">
+                        <ng-template #lastTotalTime>
+                            <count-down [target]="30"></count-down>
+                        </ng-template>
+                    </number-info>
+                </div>
+                <div nz-col nzMd="6" nzSm="12" nzXs="24">
+                    <number-info [subTitle]="'app.monitor.total-transactions-per-second' | translate" [total]="234"
+                                 suffix="元"></number-info>
+                </div>
+            </div>
+            <div class="map-chart">
+                <img
+                        [nzTooltipTitle]="'app.monitor.waiting-for-implementation' | translate"
+                        alt="map"
+                        nz-tooltip
+                        nzTooltipPlacement="top"
+                        src="https://gw.alipayobjects.com/zos/rmsportal/HBWnDEUXCnGnGrRfrpKa.png"
+                />
+            </div>
+        </nz-card>
+    </div>
+    <div nz-col nzLg="6" nzMd="24" nzSm="24" nzXs="24">
+        <nz-card [nzBordered]="false" [nzTitle]="'app.monitor.activity-forecast' | translate" class="mb-lg">
+            <div *ngIf="activeData" class="active-chart">
+                <number-info subTitle="目标评估" total="有望达到预期"></number-info>
+                <g2-mini-area [animate]="false" [borderWidth]="2" [data]="activeData" [height]="84" line
+                              padding="0"></g2-mini-area>
+                <div class="active-grid">
+                    <p>{{ activeStat.max }} 亿元</p>
+                    <p>{{ activeStat.min }} 亿元</p>
+                </div>
+                <div class="active-legend">
+                    <span>00:00</span>
+                    <span>{{ activeStat.t1 }}</span>
+                    <span>{{ activeStat.t2 }}</span>
+                </div>
+            </div>
+        </nz-card>
+        <nz-card [nzBodyStyle]="{ 'text-align': 'center' }" [nzBordered]="false"
+                 [nzTitle]="'app.monitor.efficiency' | translate" class="mb-lg">
+            <g2-gauge
+                    *ngIf="percent"
+                    [format]="couponFormat"
+                    [height]="180"
+                    [percent]="percent"
+                    [title]="'app.monitor.ratio' | translate"
+            ></g2-gauge>
+        </nz-card>
+    </div>
+</div>
+<div [nzGutter]="24" nz-row>
+    <div class="mb-lg" nz-col nzLg="12" nzSm="24" nzXs="24">
+        <nz-card [nzBordered]="false" [nzTitle]="'app.monitor.proportion-per-category' | translate" class="pie-card">
+            <div [nzGutter]="4" nz-row style="padding: 16px 0;">
+                <div [nzSpan]="8" nz-col>
+                    <g2-pie
+                            [animate]="false"
+                            [height]="128"
+                            [lineWidth]="2"
+                            [percent]="28"
+                            [subTitle]="'app.monitor.fast-food' | translate"
+                            total="28%"
+                    ></g2-pie>
+                </div>
+                <div [nzSpan]="8" nz-col>
+                    <g2-pie
+                            [animate]="false"
+                            [height]="128"
+                            [lineWidth]="2"
+                            [percent]="22"
+                            [subTitle]="'app.monitor.western-food' | translate"
+                            color="#5DDECF"
+                            total="22%"
+                    ></g2-pie>
+                </div>
+                <div [nzSpan]="8" nz-col>
+                    <g2-pie
+                            [animate]="false"
+                            [height]="128"
+                            [lineWidth]="2"
+                            [percent]="32"
+                            [subTitle]="'app.monitor.hot-pot' | translate"
+                            color="#2FC25B"
+                            total="32%"
+                    ></g2-pie>
+                </div>
+            </div>
+        </nz-card>
+    </div>
+    <div class="mb-lg" nz-col nzLg="6" nzSm="24" nzXs="24">
+        <nz-card [nzBordered]="false" [nzTitle]="'app.monitor.popular-searches' | translate">
+            <g2-tag-cloud [data]="tags" [height]="165"></g2-tag-cloud>
+        </nz-card>
+    </div>
+    <div class="mb-lg" nz-col nzLg="6" nzSm="24" nzXs="24">
+        <nz-card [nzBordered]="false" [nzTitle]="'app.monitor.resource-surplus' | translate">
+            <div class="text-center">
+                <g2-water-wave [height]="165" [percent]="34"
+                               [title]="'app.monitor.fund-surplus' | translate"></g2-water-wave>
+            </div>
+        </nz-card>
+    </div>
+</div>

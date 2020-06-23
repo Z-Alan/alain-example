@@ -1,0 +1,86 @@
+<div class="modal-header">
+    <div class="modal-title">{{ i.id > 0 ? '编辑' : '添加' }}-门店（基于HTML模板表单写法）</div>
+</div>
+<form #f="ngForm" (ngSubmit)="save()" nz-form>
+    <nz-form-item class="mb-sm">
+        <nz-form-label nzSpan="4">所属分销商</nz-form-label>
+        <nz-form-control nzSpan="8">
+            {{ i.user_id }}
+            <a (click)="msgSrv.info('find')">查找用户</a>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item class="mb-sm">
+        <nz-form-label nzSpan="4">门店名称</nz-form-label>
+        <nz-form-control nzExtra="如：国美、麦当劳，不应包含地区、地址、分店名等信息，错误示例：北京国美" nzSpan="8">
+            <input [(ngModel)]="i.name" maxlength="30" name="name" nz-input required/>
+        </nz-form-control>
+        <nz-form-label nzSpan="4">分店名称</nz-form-label>
+        <nz-form-control nzExtra="不应包含地区信息，不应与门店名有重复，错误示例：北京王府井店" nzSpan="8">
+            <input [(ngModel)]="i.branch_name" maxlength="20" name="branch_name" nz-input required/>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item class="mb-sm">
+        <nz-form-label nzSpan="4">所在地</nz-form-label>
+        <nz-form-control nzSpan="8">
+            <input [(ngModel)]="i.geo" maxlength="50" name="geo" nz-input required/>
+        </nz-form-control>
+        <nz-form-label nzSpan="4">街道地址</nz-form-label>
+        <nz-form-control nzSpan="8">
+            <input [(ngModel)]="i.address" maxlength="50" name="address" nz-input required/>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item class="mb-sm">
+        <nz-form-label nzSpan="4">纬度</nz-form-label>
+        <nz-form-control nzSpan="8">
+            <input [(ngModel)]="i.lat" name="lat" nz-input required/>
+        </nz-form-control>
+        <nz-form-label nzSpan="4">经度</nz-form-label>
+        <nz-form-control nzSpan="8">
+            <input [(ngModel)]="i.lng" name="lng" nz-input required/>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item class="mb-sm">
+        <nz-form-label nzSpan="4">电话</nz-form-label>
+        <nz-form-control nzSpan="8">
+            <input [(ngModel)]="i.tel" maxlength="30" name="tel" nz-input required/>
+        </nz-form-control>
+        <nz-form-label nzSpan="4">门店类型</nz-form-label>
+        <nz-form-control nzSpan="8">
+            <nz-select [(ngModel)]="i.categories" [nzAllowClear]="false" name="categories" required>
+                <nz-option *ngFor="let i of cat" [nzLabel]="i" [nzValue]="i"></nz-option>
+            </nz-select>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item class="mb-sm">
+        <nz-form-label nzSpan="4">推荐品</nz-form-label>
+        <nz-form-control nzSpan="8">
+            <input [(ngModel)]="i.recommend" maxlength="200" name="recommend" nz-input placeholder="200字以内"/>
+        </nz-form-control>
+        <nz-form-label nzSpan="4">特色服务</nz-form-label>
+        <nz-form-control nzSpan="8">
+            <input [(ngModel)]="i.special" maxlength="50" name="special" nz-input placeholder="50字以内"/>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item class="mb-sm">
+        <nz-form-label nzSpan="4">商户简介</nz-form-label>
+        <nz-form-control nzSpan="8">
+            <input [(ngModel)]="i.introduction" maxlength="300" name="introduction" nz-input placeholder="300字以内"/>
+        </nz-form-control>
+        <nz-form-label nzSpan="4">营业时间</nz-form-label>
+        <nz-form-control nzSpan="8">
+            <input [(ngModel)]="i.open_time" maxlength="30" name="open_time" nz-input placeholder="30字以内"/>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item class="mb-sm">
+        <nz-form-label nzSpan="4">人均价格</nz-form-label>
+        <nz-form-control nzSpan="8">
+            <nz-input-number [(ngModel)]="i.avg_price" [nzMin]="0" [nzStep]="10" name="avg_price"></nz-input-number>
+        </nz-form-control>
+    </nz-form-item>
+    <div class="modal-footer">
+        <button (click)="close()" nz-button type="button">关闭</button>
+        <button [disabled]="!f.form.valid || !f.form.dirty" [nzLoading]="http.loading" [nzType]="'primary'" nz-button>
+            保存
+        </button>
+    </div>
+</form>

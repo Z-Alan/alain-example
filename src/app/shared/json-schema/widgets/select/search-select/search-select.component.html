@@ -1,0 +1,16 @@
+<nz-select
+        (nzOnSearch)="onSearch($event)"
+        [(ngModel)]="selectedUser"
+        nzAllowClear
+        nzMode="multiple"
+        nzPlaceHolder="Select users"
+        nzServerSearch
+        nzShowSearch
+>
+    <ng-container *ngFor="let o of optionList">
+        <nz-option *ngIf="!isLoading" [nzLabel]="o" [nzValue]="o"></nz-option>
+    </ng-container>
+    <nz-option *ngIf="isLoading" nzCustomContent nzDisabled>
+        <i class="loading-icon" nz-icon nzType="loading"></i> Loading Data...
+    </nz-option>
+</nz-select>

@@ -1,0 +1,102 @@
+<nz-card [nzBordered]="false">
+    <form [labelWidth]="null" gutter="32" nz-form se-container="1" size="compact">
+        <se label="所属类目" line>
+            <tag-select>
+                <nz-tag
+                        (nzCheckedChange)="changeCategory($event, idx)"
+                        *ngFor="let i of categories; let idx = index"
+                        [nzChecked]="i.value"
+                        nzMode="checkable"
+                >
+                    {{ i.text }}
+                </nz-tag>
+            </tag-select>
+        </se>
+        <se label="owner" line>
+            <nz-select [(ngModel)]="q.owners" [nzMode]="'tags'" name="owners" style="max-width: 286px;">
+                <nz-option *ngFor="let i of owners" [nzLabel]="i.name" [nzValue]="i.id"></nz-option>
+            </nz-select>
+            <a (click)="setOwner()" class="ml-sm">只看自己的</a>
+        </se>
+        <se label="其它选项">
+            <div class="ant-form ant-form-inline">
+                <nz-form-item>
+                    <nz-form-label nzFor="rate">作者</nz-form-label>
+                    <nz-form-control>
+                        <nz-select
+                                [(ngModel)]="q.user"
+                                [nzPlaceHolder]="'不限'"
+                                [nzShowSearch]="true"
+                                name="user"
+                                style="width: 100px;"
+                        >
+                            <nz-option [nzLabel]="'李三'" [nzValue]="'lisa'"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzFor="rate">好评度</nz-form-label>
+                    <nz-form-control>
+                        <nz-select
+                                [(ngModel)]="q.rate"
+                                [nzPlaceHolder]="'不限'"
+                                [nzShowSearch]="true"
+                                name="rate"
+                                style="width: 100px;"
+                        >
+                            <nz-option [nzLabel]="'优秀'" [nzValue]="'good'"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </se>
+    </form>
+</nz-card>
+<nz-card [nzBordered]="false">
+    <nz-list
+            [nzDataSource]="list"
+            [nzLoadMore]="loadMore"
+            [nzLoading]="loading"
+            [nzRenderItem]="item"
+            nzItemLayout="vertical"
+    >
+        <ng-template #item let-item>
+            <nz-list-item [nzActions]="[op1, op2, op3]" [nzContent]="nzContent" [nzExtra]="nzExtra">
+                <ng-template #op1><i class="mr-sm" nz-icon nzType="star"></i>{{ item.star }}</ng-template>
+                <ng-template #op2><i class="mr-sm" nz-icon nzType="like"></i>{{ item.like }}</ng-template>
+                <ng-template #op3><i class="mr-sm" nz-icon nzType="message"></i>{{ item.message }}</ng-template>
+                <ng-template #nzExtra>
+                    <div style="width: 272px; height: 1px;"></div>
+                </ng-template>
+                <nz-list-item-meta [nzDescription]="nzDescription" [nzTitle]="nzTitle">
+                    <ng-template #nzTitle>
+                        <a href="{{ item.href }}" target="_blank">{{ item.title }}</a>
+                    </ng-template>
+                    <ng-template #nzDescription>
+                        <nz-tag>Alain</nz-tag>
+                        <nz-tag>ng-zorro-antd</nz-tag>
+                        <nz-tag>Ant Design</nz-tag>
+                    </ng-template>
+                </nz-list-item-meta>
+                <ng-template #nzContent>
+                    <p>{{ item.content }}</p>
+                    <div class="mt-md d-flex">
+                        <nz-avatar [nzSize]="'small'" [nzSrc]="item.avatar" class="mr-sm"></nz-avatar>
+                        <a href="{{ item.href }}" target="_blank">{{ item.owner }}</a>
+                        <span class="px-sm">发布在</span>
+                        <a href="{{ item.href }}" target="_blank">{{ item.href }}</a>
+                        <time class="pl-md text-grey" title="{{ item.updatedAt }}">{{ item.updatedAt | _date }}</time>
+                    </div>
+                </ng-template>
+            </nz-list-item>
+        </ng-template>
+        <ng-template #loadMore>
+            <div class="text-center mt-md">
+                <button (click)="getData(true)" [nzLoading]="loading" [nzType]="'dashed'" nz-button
+                        style="min-width:200px;">
+                    加载更多
+                </button>
+            </div>
+        </ng-template>
+    </nz-list>
+</nz-card>

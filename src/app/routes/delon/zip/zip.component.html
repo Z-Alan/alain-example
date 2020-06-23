@@ -1,0 +1,39 @@
+<div class="alain-default__content-title">
+    <h1>
+        Read & Write zip file,
+        <a href="//ng-alain.com/components/zip" target="_blank">Document</a>
+    </h1>
+</div>
+<nz-card nzTitle="解压">
+    <button (click)="url()" nz-button>Via Url</button>
+    <input (change)="change($event)" class="ml-sm" multiple="false" type="file"/>
+    <ol>
+        <li *ngFor="let i of list">{{ i | json }}</li>
+    </ol>
+</nz-card>
+<nz-card *ngIf="instance" nzTitle="压缩">
+    <button (click)="data.push({})" [nzType]="'primary'" nz-button>new</button>
+    <button (click)="download()" class="ml-sm" nz-button>download</button>
+    <nz-table [nzData]="data" [nzFrontPagination]="false" [nzShowPagination]="false" class="mt-sm">
+        <thead>
+        <tr>
+            <th>
+                <span>path</span>
+            </th>
+            <th>
+                <span>url</span>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let i of data; let index = index">
+            <td>
+                <input [(ngModel)]="i.path" name="path{{ index }}" nz-input/>
+            </td>
+            <td>
+                <input [(ngModel)]="i.url" name="url{{ index }}" nz-input/>
+            </td>
+        </tr>
+        </tbody>
+    </nz-table>
+</nz-card>

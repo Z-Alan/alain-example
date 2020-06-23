@@ -1,0 +1,77 @@
+<div class="alain-default__content-title">
+    <h1>
+        Lodop打印
+        <small
+        >更多体验请至
+            <a href="https://ng-alain.com/components/lodop" target="_blank">ng-alain.com</a>
+        </small>
+    </h1>
+</div>
+<nz-card>
+    <nz-alert *ngIf="error" [nzMessage]="message" [nzType]="'warning'">
+        <ng-template #message>
+            请先下载
+            <a href="http://c-lodop.com/download.html" target="_blank">Lodop插件</a>。
+        </ng-template>
+    </nz-alert>
+    <form *ngIf="!error" nz-form>
+        <nz-form-item nz-row>
+            <nz-form-label [nzSm]="6" nz-col>打印服务器</nz-form-label>
+            <nz-form-control [nzSm]="18" nz-col>
+                <nz-input-group>
+                    <div [nzSpan]="16" nz-col>
+                        <input [(ngModel)]="cog.url" name="url" nz-input
+                               nzPlaceHolder="https://localhost:8443/CLodopfuncs.js"/>
+                    </div>
+                    <div [nzSpan]="8" nz-col>
+                        <button (click)="reload(null)" nz-button>重新加载打印机</button>
+                    </div>
+                </nz-input-group>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item nz-row>
+            <nz-form-label [nzSm]="6" nz-col>打印机</nz-form-label>
+            <nz-form-control [nzSm]="18" nz-col>
+                <nz-select
+                        (ngModelChange)="changePinter($event)"
+                        [(ngModel)]="cog.printer"
+                        name="printer"
+                        nzAllowClear
+                        nzPlaceHolder="请选择打印机"
+                        nzShowSearch
+                        style="width:90%;"
+                >
+                    <nz-option *ngFor="let name of pinters" [nzLabel]="name" [nzValue]="name"></nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item nz-row>
+            <nz-form-label [nzSm]="6" nz-col>纸张类型</nz-form-label>
+            <nz-form-control [nzSm]="18" nz-col>
+                <nz-select
+                        [(ngModel)]="cog.paper"
+                        name="paper"
+                        nzAllowClear
+                        nzPlaceHolder="请选择纸张类型"
+                        nzShowSearch
+                        style="width:90%;"
+                >
+                    <nz-option *ngFor="let name of papers" [nzLabel]="name" [nzValue]="name"></nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item nz-row>
+            <nz-form-label [nzSm]="6" nz-col>打印内容</nz-form-label>
+            <nz-form-control [nzSm]="18" nz-col>
+                <textarea [(ngModel)]="cog.html" name="html" nz-input nzAutosize></textarea>
+                <div nz-form-extra>仅限HTML，更多类型支持请参考官网</div>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item nz-row>
+            <nz-form-control [nzOffset]="6" [nzSm]="18" nz-col>
+                <button (click)="print(true)" [nzLoading]="printing" nz-button>打印预览</button>
+                <button (click)="print()" [nzLoading]="printing" nz-button>直接打印</button>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</nz-card>

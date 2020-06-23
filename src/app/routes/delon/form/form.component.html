@@ -1,0 +1,11 @@
+<page-header [title]="'Page Name'"></page-header>
+<nz-card>
+    <sf
+            (formReset)="st.reset(params)"
+            (formSubmit)="st.reset($event)"
+            [formData]="params"
+            [schema]="searchSchema"
+            mode="search"
+    ></sf>
+    <st #st [columns]="columns" [data]="url" [req]="{ params: params }"></st>
+</nz-card>

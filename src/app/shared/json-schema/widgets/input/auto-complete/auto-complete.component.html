@@ -1,0 +1,22 @@
+<div class="example-input">
+    <nz-input-group nzSize="large">
+        <label>
+            <input (ngModelChange)="onChange($event)" [(ngModel)]="inputValue" [nzAutocomplete]="auto" nz-input
+                   placeholder="input here"/>
+        </label>
+    </nz-input-group>
+    <nz-autocomplete #auto>
+        <nz-auto-optgroup *ngFor="let group of optionGroups" [nzLabel]="groupTitle">
+            <ng-template #groupTitle>
+        <span>
+          {{ group.title }}
+            <a class="more-link" href="https://www.google.com/search?q=ng+zorro" target="_blank">更多</a>
+        </span>
+            </ng-template>
+            <nz-auto-option *ngFor="let option of group.children" [nzLabel]="option.title" [nzValue]="option.title">
+                {{ option.title }}
+                <span class="certain-search-item-count">{{ option.count }} 人 关注</span>
+            </nz-auto-option>
+        </nz-auto-optgroup>
+    </nz-autocomplete>
+</div>

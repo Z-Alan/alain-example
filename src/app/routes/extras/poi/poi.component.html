@@ -1,0 +1,26 @@
+<div class="alain-default__content-title">
+    <h1>门店</h1>
+    <button (click)="add()" [nzType]="'primary'" nz-button>添加</button>
+</div>
+<form nz-form nzLayout="inline" se-container>
+    <se>
+        <nz-select [(ngModel)]="s.s" [nzAllowClear]="false" name="s">
+            <nz-option nzLabel="状态不限" nzValue=""></nz-option>
+            <nz-option nzLabel="正常" nzValue="1"></nz-option>
+            <nz-option nzLabel="已取消" nzValue="2"></nz-option>
+            <nz-option nzLabel="已删除" nzValue="3"></nz-option>
+            <nz-option nzLabel="待提交" nzValue="10"></nz-option>
+            <nz-option nzLabel="待审核" nzValue="11"></nz-option>
+        </nz-select>
+    </se>
+    <se>
+        <input [(ngModel)]="s.user_id" name="user_id" nz-input placeholder="用户编号"/>
+    </se>
+    <se>
+        <input [(ngModel)]="s.q" name="q" nz-input placeholder="门店、分店名称"/>
+    </se>
+    <se>
+        <button (click)="st.reset(s)" nz-button nzType="primary">搜索</button>
+    </se>
+</form>
+<st #st [columns]="columns" [data]="url" [req]="{ params: s }" class="bg-white"></st>

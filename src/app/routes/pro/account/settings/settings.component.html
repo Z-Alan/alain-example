@@ -1,0 +1,11 @@
+<div class="main">
+    <div class="menu">
+        <ul [nzMode]="mode" nz-menu>
+            <li (click)="to(m)" *ngFor="let m of menus" [nzSelected]="m.selected" nz-menu-item>{{ m.title }}</li>
+        </ul>
+    </div>
+    <div class="content">
+        <div class="title">{{ title }}</div>
+        <router-outlet></router-outlet>
+    </div>
+</div>

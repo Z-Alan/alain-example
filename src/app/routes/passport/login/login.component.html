@@ -1,0 +1,78 @@
+<form (ngSubmit)="submit()" [formGroup]="form" nz-form role="form">
+    <nz-tabset (nzSelectChange)="switch($event)" [nzAnimated]="false" class="tabs">
+        <nz-tab [nzTitle]="'app.login.tab-login-credentials' | translate">
+            <nz-alert *ngIf="error" [nzMessage]="error" [nzShowIcon]="true" [nzType]="'error'" class="mb-lg"></nz-alert>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please enter mobile number, muse be: admin or user">
+                    <nz-input-group nzPrefixIcon="user" nzSize="large">
+                        <input formControlName="userName" nz-input placeholder="username: admin or user"/>
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="Please enter password, muse be: ng-alain.com">
+                    <nz-input-group nzPrefixIcon="lock" nzSize="large">
+                        <input formControlName="password" nz-input placeholder="password: ng-alain.com"
+                               type="password"/>
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+        </nz-tab>
+        <nz-tab [nzTitle]="'app.login.tab-login-mobile' | translate">
+            <nz-form-item>
+                <nz-form-control [nzErrorTip]="mobileErrorTip">
+                    <nz-input-group nzPrefixIcon="user" nzSize="large">
+                        <input formControlName="mobile" nz-input placeholder="mobile number"/>
+                    </nz-input-group>
+                    <ng-template #mobileErrorTip let-i>
+                        <ng-container *ngIf="i.errors.required">
+                            {{ 'validation.phone-number.required' | translate }}
+                        </ng-container>
+                        <ng-container *ngIf="i.errors.pattern">
+                            {{ 'validation.phone-number.wrong-format' | translate }}
+                        </ng-container>
+                    </ng-template>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control [nzErrorTip]="'validation.verification-code.required' | translate">
+                    <nz-row [nzGutter]="8">
+                        <nz-col [nzSpan]="16">
+                            <nz-input-group nzPrefixIcon="mail" nzSize="large">
+                                <input formControlName="captcha" nz-input placeholder="captcha"/>
+                            </nz-input-group>
+                        </nz-col>
+                        <nz-col [nzSpan]="8">
+                            <button (click)="getCaptcha()" [disabled]="count" [nzLoading]="http.loading" nz-button
+                                    nzBlock nzSize="large" type="button">
+                                {{ count ? count + 's' : ('app.register.get-verification-code' | translate) }}
+                            </button>
+                        </nz-col>
+                    </nz-row>
+                </nz-form-control>
+            </nz-form-item>
+        </nz-tab>
+    </nz-tabset>
+    <nz-form-item>
+        <nz-col [nzSpan]="12">
+            <label formControlName="remember" nz-checkbox>{{ 'app.login.remember-me' | translate }}</label>
+        </nz-col>
+        <nz-col [nzSpan]="12" class="text-right">
+            <a (click)="msg.error('请找欧阳锋')" class="forgot">{{ 'app.login.forgot-password' | translate }}</a>
+        </nz-col>
+    </nz-form-item>
+    <nz-form-item>
+        <button [nzLoading]="http.loading" nz-button nzBlock nzSize="large" nzType="primary" type="submit">
+            {{ 'app.login.login' | translate }}
+        </button>
+    </nz-form-item>
+</form>
+<div class="other">
+    {{ 'app.login.sign-in-with' | translate }}
+    <i (click)="open('auth0', 'window')" class="icon" nz-icon nz-tooltip nzTooltipTitle="in fact Auth0 via window"
+       nzType="alipay-circle"></i>
+    <i (click)="open('github')" class="icon" nz-icon nz-tooltip nzTooltipTitle="in fact Github via redirect"
+       nzType="taobao-circle"></i>
+    <i (click)="open('weibo', 'window')" class="icon" nz-icon nzType="weibo-circle"></i>
+    <a class="register" routerLink="/passport/register">{{ 'app.login.signup' | translate }}</a>
+</div>

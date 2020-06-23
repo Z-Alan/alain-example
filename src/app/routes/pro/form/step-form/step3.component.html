@@ -1,0 +1,15 @@
+<result [extra]="resultExtra" [title]="'操作成功'" description="预计两小时内到账" type="success">
+    <ng-template #resultExtra>
+        <div col="1" labelWidth="150" sv-container>
+            <sv label="付款账户">{{ item.pay_account }}</sv>
+            <sv label="账户类型">{{ item.receiver_type_str }}</sv>
+            <sv label="收款账户">{{ item.receiver_account }}</sv>
+            <sv label="转账金额">
+                <strong class="text-lg pr-sm">{{ item.amount }}</strong>
+                元
+            </sv>
+        </div>
+    </ng-template>
+    <button (click)="item.again()" [nzType]="'primary'" nz-button>再转一笔</button>
+    <button class="ml-sm" nz-button>查看账单</button>
+</result>

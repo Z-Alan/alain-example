@@ -1,0 +1,92 @@
+<page-header [title]="null"></page-header>
+<nz-card [nzBordered]="false">
+    <div nz-row>
+        <div [nzSm]="8" [nzXs]="24" class="header-info" nz-col>
+            <span class="text-grey-dark">我的待办</span>
+            <span class="d-block display-2">8个任务</span>
+            <em></em>
+        </div>
+        <div [nzSm]="8" [nzXs]="24" class="header-info" nz-col>
+            <span class="text-grey-dark">本周任务平均处理时间</span>
+            <span class="d-block display-2">32分钟</span>
+            <em></em>
+        </div>
+        <div [nzSm]="8" [nzXs]="24" class="header-info" nz-col>
+            <span class="text-grey-dark">本周完成任务数</span>
+            <span class="d-block display-2">24个任务</span>
+        </div>
+    </div>
+</nz-card>
+<nz-card [nzBordered]="false">
+    <div class="d-flex align-items-center mb-lg">
+        <h3 class="flex-1 text-lg">标准列表</h3>
+        <div>
+            <nz-radio-group [(ngModel)]="q.status" class="mr-md">
+                <label [nzValue]="'all'" nz-radio-button>
+                    <span>全部</span>
+                </label>
+                <label [nzValue]="'progress'" nz-radio-button>
+                    <span>进行中</span>
+                </label>
+                <label [nzValue]="'waiting'" nz-radio-button>
+                    <span>等待中</span>
+                </label>
+            </nz-radio-group>
+            <nz-input-group nzSuffixIcon="search" style="width: 270px;">
+                <input [(ngModel)]="q.q" name="q" nz-input placeholder="请输入" type="text"/>
+            </nz-input-group>
+        </div>
+    </div>
+    <button (click)="openEdit()" [nzType]="'dashed'" class="mb-sm" nz-button nzBlock>
+        <i nz-icon nzType="plus"></i>
+        <span>添加</span>
+    </button>
+    <nz-list [nzDataSource]="data" [nzLoading]="loading" [nzPagination]="pagination" [nzRenderItem]="item">
+        <ng-template #item let-item>
+            <nz-list-item [nzActions]="[edit, op]" [nzContent]="nzContent">
+                <ng-template #edit>
+                    <a (click)="openEdit(item)">编辑</a>
+                </ng-template>
+                <ng-template #op>
+                    <a [nzDropdownMenu]="opMenu" class="ant-dropdown-link" nz-dropdown>
+                        更多
+                        <i nz-icon nzType="down"></i>
+                    </a>
+                    <nz-dropdown-menu #opMenu="nzDropdownMenu">
+                        <ul nz-menu>
+                            <li (click)="openEdit(item)" nz-menu-item>编辑</li>
+                            <li (click)="msg.success('删除：' + item.title)" nz-menu-item>删除</li>
+                        </ul>
+                    </nz-dropdown-menu>
+                </ng-template>
+                <nz-list-item-meta [nzAvatar]="nzAvatar" [nzDescription]="item.subDescription" [nzTitle]="nzTitle">
+                    <ng-template #nzTitle>
+                        <a href="{{ item.href }}" target="_blank">{{ item.title }}</a>
+                    </ng-template>
+                    <ng-template #nzAvatar>
+                        <nz-avatar [nzShape]="'square'" [nzSrc]="item.logo" nzSize="large"></nz-avatar>
+                    </ng-template>
+                </nz-list-item-meta>
+                <ng-template #nzContent>
+                    <div class="width-md">
+                        <div class="d-flex text-grey-dark">
+                            <div class="flex-1">
+                                Owner
+                                <p>{{ item.owner }}</p>
+                            </div>
+                            <div class="text-right">
+                                开始时间
+                                <p>{{ item.createdAt | _date }}</p>
+                            </div>
+                        </div>
+                        <nz-progress [nzPercent]="item.percent" [nzStatus]="item.status"
+                                     [nzStrokeWidth]="6"></nz-progress>
+                    </div>
+                </ng-template>
+            </nz-list-item>
+        </ng-template>
+        <ng-template #pagination>
+            <nz-pagination (nzPageIndexChange)="getData()" [nzPageSize]="5" [nzTotal]="50"></nz-pagination>
+        </ng-template>
+    </nz-list>
+</nz-card>

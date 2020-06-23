@@ -1,0 +1,103 @@
+<div class="alain-default__content-title">
+    <h1>
+        二维码
+        <a href="//ng-alain.com/components/qr" target="_blank">Document</a>
+    </h1>
+</div>
+<nz-card>
+    <nz-row [nzGutter]="24">
+        <nz-col [nzSpan]="8" class="text-center">
+            <qr
+                    [backgroundAlpha]="backgroundAlpha"
+                    [background]="background"
+                    [foregroundAlpha]="foregroundAlpha"
+                    [foreground]="foreground"
+                    [level]="level"
+                    [mime]="mime"
+                    [padding]="padding"
+                    [size]="size"
+                    [value]="value"
+                    style="border: 1px solid #999;"
+            ></qr>
+        </nz-col>
+        <nz-col [nzSpan]="16">
+            <form nz-form>
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="8">背景</nz-form-label>
+                    <nz-form-control [nzSpan]="16">
+                        <nz-input-group>
+                            <input [(ngModel)]="background" [ngModelOptions]="{ standalone: true }" nz-input
+                                   style="width: 100px;" type="color"/>
+                            <nz-input-number
+                                    [(ngModel)]="backgroundAlpha"
+                                    [ngModelOptions]="{ standalone: true }"
+                                    [nzMax]="1"
+                                    [nzMin]="0"
+                                    [nzStep]="0.1"
+                            ></nz-input-number>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="8">前景</nz-form-label>
+                    <nz-form-control [nzSpan]="16">
+                        <nz-input-group>
+                            <input [(ngModel)]="foreground" [ngModelOptions]="{ standalone: true }" nz-input
+                                   style="width: 100px;" type="color"/>
+                            <nz-input-number
+                                    [(ngModel)]="foregroundAlpha"
+                                    [ngModelOptions]="{ standalone: true }"
+                                    [nzMax]="1"
+                                    [nzMin]="0"
+                                    [nzStep]="0.1"
+                            ></nz-input-number>
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="8">误差</nz-form-label>
+                    <nz-form-control [nzSpan]="16">
+                        <nz-select [(ngModel)]="level" [ngModelOptions]="{ standalone: true }">
+                            <nz-option nzLabel="L" nzValue="L"></nz-option>
+                            <nz-option nzLabel="M" nzValue="M"></nz-option>
+                            <nz-option nzLabel="Q" nzValue="Q"></nz-option>
+                            <nz-option nzLabel="H" nzValue="H"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="8">Mime</nz-form-label>
+                    <nz-form-control [nzSpan]="16">
+                        <nz-select [(ngModel)]="mime" [ngModelOptions]="{ standalone: true }">
+                            <nz-option nzLabel="image/png" nzValue="image/png"></nz-option>
+                            <nz-option nzLabel="image/jpeg" nzValue="image/jpeg"></nz-option>
+                            <nz-option nzLabel="image/gif" nzValue="image/gif"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="8">内边距</nz-form-label>
+                    <nz-form-control [nzSpan]="16">
+                        <nz-input-number [(ngModel)]="padding" [ngModelOptions]="{ standalone: true }" [nzMax]="100"
+                                         [nzMin]="0"></nz-input-number>
+                        px
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="8">大小</nz-form-label>
+                    <nz-form-control [nzSpan]="16">
+                        <nz-input-number
+                                [(ngModel)]="size"
+                                [ngModelOptions]="{ standalone: true }"
+                                [nzMax]="1000"
+                                [nzMin]="100"
+                                [nzStep]="padding"
+                        ></nz-input-number
+                        >
+                        px
+                    </nz-form-control>
+                </nz-form-item>
+            </form>
+        </nz-col>
+    </nz-row>
+</nz-card>

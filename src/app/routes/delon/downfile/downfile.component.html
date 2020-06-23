@@ -1,0 +1,16 @@
+<div class="alain-default__content-title">
+    <h1>Download a file</h1>
+</div>
+<nz-card nzTitle="DEMO">
+    <button
+            *ngFor="let i of fileTypes"
+            [http-data]="data"
+            class="mr-sm"
+            down-file
+            file-name="demo中文"
+            http-url="assets/tmp/demo{{ i }}"
+            nz-button
+    >
+        {{ i }}
+    </button>
+</nz-card>
