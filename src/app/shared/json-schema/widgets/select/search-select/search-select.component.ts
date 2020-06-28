@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { NzSelectModeType } from 'ng-zorro-antd/select/select.types';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { debounceTime, map, switchMap } from 'rxjs/operators';
 
@@ -11,12 +12,34 @@ import { debounceTime, map, switchMap } from 'rxjs/operators';
 export class SearchSelectComponent implements OnInit {
 
   randomUserUrl = 'https://api.randomuser.me/?results=5';
+  /**
+   * 搜索参数
+   */
   searchChange$ = new BehaviorSubject('');
-  optionList: string[] = [];
-  selectedUser?: string;
+  /**
+   * 选中值
+   */
+  selectedValue?: string;
+  /**
+   * 加载状态
+   */
   isLoading = false;
+  /**
+   * 下拉列表数据
+   */
+  optionList: string[] = [];
+  /**
+   * 选择框模式 multiple 多选 tags 标签 default 单选
+   */
+  mode: NzSelectModeType = 'multiple';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {
+
+  }
+
+  setOptionList(dataList: any[]) {
+    this.optionList = dataList;
+    this.cdr.detectChanges();
   }
 
   onSearch(value: string): void {
@@ -40,7 +63,7 @@ export class SearchSelectComponent implements OnInit {
       .pipe(debounceTime(500))
       .pipe(switchMap(getRandomNameList));
     optionList$.subscribe(data => {
-      this.optionList = data;
+      this.setOptionList(data);
       this.isLoading = false;
     });
   }

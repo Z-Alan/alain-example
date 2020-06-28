@@ -1,8 +1,8 @@
 <nz-select
+        [(ngModel)]="selectedValue"
         (nzOnSearch)="onSearch($event)"
-        [(ngModel)]="selectedUser"
+        [nzMode]="mode"
         nzAllowClear
-        nzMode="multiple"
         nzPlaceHolder="Select users"
         nzServerSearch
         nzShowSearch
