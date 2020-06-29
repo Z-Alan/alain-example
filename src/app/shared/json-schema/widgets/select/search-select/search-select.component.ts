@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NzSelectModeType } from 'ng-zorro-antd/select/select.types';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { debounceTime, map, switchMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-search-select',
@@ -27,7 +27,7 @@ export class SearchSelectComponent implements OnInit {
   /**
    * 下拉列表数据
    */
-  optionList: string[] = [];
+  optionList: any[];
   /**
    * 选择框模式 multiple 多选 tags 标签 default 单选
    */
@@ -43,6 +43,9 @@ export class SearchSelectComponent implements OnInit {
   }
 
   onSearch(value: string): void {
+    // if (value.length === 0) {
+    //   return;
+    // }
     this.isLoading = true;
     this.searchChange$.next(value);
   }
@@ -60,8 +63,12 @@ export class SearchSelectComponent implements OnInit {
         );
     const optionList$: Observable<string[]> = this.searchChange$
       .asObservable()
-      .pipe(debounceTime(500))
-      .pipe(switchMap(getRandomNameList));
+      .pipe(
+        filter(text => text.length > 2),
+        debounceTime(200),
+        distinctUntilChanged(),
+        switchMap(getRandomNameList),
+      );
     optionList$.subscribe(data => {
       this.setOptionList(data);
       this.isLoading = false;
